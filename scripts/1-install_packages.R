@@ -18,6 +18,9 @@
 ##
 ## ---------------------------
 
+if (!require("reticulate", quietly = TRUE)) {
+  install.packages("reticulate")
+}
 library(reticulate)
 
 py_list_packages() # List all installed Python packages
