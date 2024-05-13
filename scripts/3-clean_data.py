@@ -1,6 +1,5 @@
 # Example of how to clean and summarize data using pandas
 
-
 # since data is a dictionary, we can access the specific dataset by using the key
 # in this case, the key is "games_details"
 # notice that we should use the copy() method to avoid modifying the original data

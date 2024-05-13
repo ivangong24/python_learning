@@ -24,5 +24,6 @@ if (!require("reticulate", quietly = TRUE)) {
 library(reticulate)
 
 py_list_packages() # List all installed Python packages
-py_install(c("pandas", "numpy", "pyprojroot", "matplotlib", "plotly"))
+py_install(c("pandas", "numpy", "pyprojroot", 
+             "matplotlib", "Seaborn", "plotly"))
 
