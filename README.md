@@ -1,1 +1,1 @@
-# A repo of learning python
+# A repo of learning python for data analysis
