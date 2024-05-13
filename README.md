@@ -1,1 +1,1 @@
-# python_learning
+# A repo of learning python
