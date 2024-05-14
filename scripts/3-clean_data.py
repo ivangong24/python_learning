@@ -14,7 +14,7 @@ df_kobe_yao = data["games_details"].query("PLAYER_NAME.isin(['Kobe Bryant', 'Yao
 df_kobe_yao = data["games_details"].query("PLAYER_NAME == 'Kobe Bryant' | PLAYER_NAME == 'Yao Ming'").copy()
 
 ## external list: we need to add the @ symbol before the list
-players = ['Kobe Bryant', 'Yao Ming']
+players = ['Kobe Bryant', 'Yao Ming'] # create a list of players
 df_kobe_yao = data["games_details"].query("PLAYER_NAME.isin(@players)").copy()
 
 print(df_kobe.head(), df_kobe_yao.head())
