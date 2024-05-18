@@ -19,6 +19,7 @@ df_kobe_yao = data["games_details"].query("PLAYER_NAME.isin(@players)").copy()
 
 print(df_kobe.head(), df_kobe_yao.head())
 
+
 # compare the mean score, rebounds, and assists between Kobe and Yao
 print(df_kobe_yao.groupby("PLAYER_NAME")[["PTS", "REB", "AST"]].mean())
 
@@ -54,4 +55,50 @@ cross_table_season = pd.crosstab(
   aggfunc="mean")
 
 print(cross_table_season)
+
+# Good! Now we have summarized the data for Kobe Bryant and Yao Ming.
+# What if we would like to create a new column to calculate the average points (PTS) per minute (MIN)?
+# We can use the assign() method to create a new column, similar to the mutate() function in dplyr
+# Notice that MIN is a string, we need to convert it to a numeric value
+# There are two parts of MIN, the first part is the minutes, and the second part is the seconds
+# we can use the str.extract() method to extract the minutes and seconds
+# the str.extract() method is similar to the str_extract() function in R
+
+# for example, we would like to split a string "43:18" into two parts, 43 and 18
+# and assign two new variables to store the minutes and seconds
+# we can use the following code
+df_test = pd.DataFrame({"MIN": ["43:18"]})
+df_test[["MINUTES", "SECONDS"]] = df_test["MIN"].str.extract(r"(\d+):(\d+)")
+print(df_test)
+
+# now we can apply the same logic to the df_kobe_yao dataset
+df_kobe_yao_new = df_kobe_yao_join.assign(
+  MINUTES=pd.to_numeric(df_kobe_yao_join["MIN"].str.extract(r"(\d+):(\d+)")[0]),
+  SECONDS=pd.to_numeric(df_kobe_yao_join["MIN"].str.extract(r"(\d+):(\d+)")[1]) / 60
+  ).copy()
+
+# now we can create a new column to calculate the average points per minute
+df_kobe_yao_final = df_kobe_yao_new.assign(
+  PTS_PER_MIN = 
+  df_kobe_yao_new["PTS"] / 
+  (df_kobe_yao_new["MINUTES"] + df_kobe_yao_new["SECONDS"])
+  ).copy()
+
+# now let's just select the columns we are interested in
+# we can use the filter() method, which is very similar to the select() function in dplyr
+# so filter() = select() in dplyr, and query() = filter() in dplyr
+df_kobe_yao_final_filter = df_kobe_yao_final.filter(
+  items=["PLAYER_NAME", "GAME_DATE", "SEASON", "PTS", "MIN", "PTS_PER_MIN"]
+  ).copy()
+
+# Now let's summarize the data by player name and season
+
+cross_table_pts_per_min = pd.crosstab(
+  index=df_kobe_yao_final_filter["PLAYER_NAME"],
+  columns=df_kobe_yao_final_filter["SEASON"],
+  values=df_kobe_yao_final_filter["PTS_PER_MIN"],
+  aggfunc="mean")
+  
+print(cross_table_pts_per_min)
+
 
