@@ -101,4 +101,24 @@ cross_table_pts_per_min = pd.crosstab(
   
 print(cross_table_pts_per_min)
 
+# Great! Now I would like to change all the variables to lowercase for easier reading
+# we can use the rename() method to rename the columns
+# the rename() method is similar to the rename() function in dplyr
+# we can use the `columns` parameter to specify the new column names
+# the str.lower() method is used to convert the column names to lowercase
+df_kobe_yao_final_filter_lower = df_kobe_yao_final_filter.rename(
+  columns=str.lower).copy()
+  
+# Now I would like to convert all NaN values to 0
+# we can use the fillna() method to replace NaN values with a specific value
+# the fillna() method is similar to the replace_na() function in dplyr
+df_kobe_yao_final_filter_lower_nona = df_kobe_yao_final_filter_lower.fillna(0).copy()
 
+
+# Then I would like to arrange the data by pts_per_min in descending order
+# we can use the sort_values() method to sort the data
+# the sort_values() method is similar to the arrange() function in dplyr
+# we can use the `by` parameter to specify the column to sort
+# the `ascending` parameter is used to specify the order of sorting
+df_kobe_yao_final_filter_lower_sort = df_kobe_yao_final_filter_lower_nona.sort_values(
+  by="pts_per_min", ascending=False).copy()
