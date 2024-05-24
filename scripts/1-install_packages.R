@@ -25,5 +25,5 @@ library(reticulate)
 
 py_list_packages() # List all installed Python packages
 py_install(c("pandas", "numpy", "pyprojroot", 
-             "matplotlib", "Seaborn", "plotly"))
+             "matplotlib", "Seaborn", "plotly", "pyodbc"))
 
