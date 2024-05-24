@@ -9,8 +9,24 @@ conn = pyodbc.connect(
     r'PWD=123456'
 )
 
+# show all table names
+
 cursor = conn.cursor()
-cursor.execute('select * from tbl_xxx')
-for row in cursor.fetchall():
-    print (row)
+for table_info in cursor.tables(tableType='TABLE'):
+    print(table_info.table_name)
+cursor.close()
+
+# create a data frame from a table
+
+import pandas as pd
+
+sql = 'SELECT * FROM tbl_xxx'
+
+df = pd.read_sql(sql, conn)
+
+print(df.head())
+
+# close the connection
+
+conn.close()
     
